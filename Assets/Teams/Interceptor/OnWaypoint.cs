@@ -9,7 +9,6 @@ namespace Interceptor
     {
         public SharedBool onWayPoint;
 
-
         public override TaskStatus OnUpdate()
         {
             if(onWayPoint.Value)

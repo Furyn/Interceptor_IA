@@ -20,25 +20,29 @@ namespace Interceptor {
             float distanceFromEnemy = Vector2.Distance(otherSpaceship.Position, spaceship.Position);
             behaviorTree.SetVariableValue("DistanceFromEnemy", distanceFromEnemy);
 
+            #region Calcul WayPoint
             SharedVector2 posWaypointProche = data.WayPoints[0].Position;
             Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
-            Vector2 distanceLimit = new Vector2(1.5f, 1.5f);
+            float distanceLimit = 0.2f;
 
             foreach (WayPointView wayPoint in data.WayPoints)
             {
-                Vector2 distanceMine = wayPoint.Position - spaceship.Position;
-                if (Mathf.Abs(distanceMine.x) + Mathf.Abs(distanceMine.y) < Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y))
+                Vector2 distanceWayPoint = wayPoint.Position - spaceship.Position;
+                if (Mathf.Abs(distanceWayPoint.x) + Mathf.Abs(distanceWayPoint.y) < Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y))
                 {
-                    distanceWaypointProche = distanceMine;
+                    distanceWaypointProche = distanceWayPoint;
                     posWaypointProche = wayPoint.Position;
                 }
             }
-            if (Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y) < Mathf.Abs(distanceLimit.x) + Mathf.Abs(distanceLimit.y))
-            {
+            if (Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y) < distanceLimit)
                 behaviorTree.SetVariableValue("OnWayPoint", true);
-            }
-            behaviorTree.SetVariableValue("WaypointPos", posWaypointProche);
+            else
+                behaviorTree.SetVariableValue("OnWayPoint", false);
 
+            behaviorTree.SetVariableValue("WaypointPos", posWaypointProche);
+            #endregion
+
+            #region Calcul Mine
             if (data.Mines.Count > 0)
             {
 				SharedVector2 posMineProche = data.Mines[0].Position;
@@ -63,8 +67,9 @@ namespace Interceptor {
             {
 				behaviorTree.SetVariableValue("MinePos", Vector2.negativeInfinity);
 			}
+            #endregion
 
-			behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
+            behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);
 			behaviorTree.SetVariableValue("ShipOrientaion", spaceship.Orientation);
 
@@ -79,7 +84,6 @@ namespace Interceptor {
 			behaviorTree.SetVariableValue("Shoot", false);
 			behaviorTree.SetVariableValue("UseChock", false);
 			behaviorTree.SetVariableValue("MineDropped", false);
-            behaviorTree.SetVariableValue("OnWayPoint", false);
 
             return new InputData(thrust, targetOrient, shoot, mine, shock);
 		}

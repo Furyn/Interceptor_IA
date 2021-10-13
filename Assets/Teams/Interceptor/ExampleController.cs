@@ -69,6 +69,10 @@ namespace Interceptor {
 			}
             #endregion
 
+            int nbrWaypoint = (int)Mathf.Ceil((data.WayPoints.Count / 2)) + 1;
+
+            behaviorTree.SetVariableValue("OurScore", spaceship.Score);
+            behaviorTree.SetVariableValue("NumberOfWayPoint", nbrWaypoint);
             behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);
 			behaviorTree.SetVariableValue("ShipOrientaion", spaceship.Orientation);

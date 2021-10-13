@@ -17,8 +17,8 @@ namespace Interceptor
         [BehaviorDesigner.Runtime.Tasks.Tooltip("myship orientation")]
         public SharedFloat myShipOrientation;
 
-        [BehaviorDesigner.Runtime.Tasks.Tooltip("Asteroid in between")]
-        public SharedBool asteroidInBetween;
+        /*[BehaviorDesigner.Runtime.Tasks.Tooltip("Asteroid in between")]
+        public SharedBool asteroidInBetween;*/
 
         public override TaskStatus OnUpdate()
         {
@@ -28,10 +28,15 @@ namespace Interceptor
 
             if (hit.collider.CompareTag("Asteroid"))
             {
-                asteroidInBetween.SetValue(true);
+                //asteroidInBetween.SetValue(true);
+                return TaskStatus.Success;
+            }
+            else
+            {
+                return TaskStatus.Failure;
             }
 
-            return TaskStatus.Success;
+            
         }
     }
 }

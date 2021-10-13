@@ -19,10 +19,15 @@ namespace Interceptor {
 		{
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
 			float thrust = 1.0f;
-			float targetOrient = spaceship.Orientation + 90.0f;
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
-            SharedBool shoot = (SharedBool)behaviorTree.GetVariable("shoot");
-            return new InputData(thrust, targetOrient, needShoot, false, false);
+
+			behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
+
+			SharedFloat angleDir = (SharedFloat)behaviorTree.GetVariable("Direction");
+			Debug.Log(angleDir.Value);
+			float targetOrient = spaceship.Orientation + angleDir.Value;
+
+			return new InputData(thrust, targetOrient, needShoot, false, false);
 		}
 	}
 

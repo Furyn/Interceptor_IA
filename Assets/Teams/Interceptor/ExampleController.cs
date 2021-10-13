@@ -15,9 +15,9 @@ namespace Interceptor {
 		public override InputData UpdateInput(SpaceShipView spaceship, GameData data)
 		{
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
-			float thrust = 1.0f;
+			float thrust = (float)behaviorTree.GetVariable("ShipThruster").GetValue();
 
-            if (data.Mines.Count > 0)
+			if (data.Mines.Count > 0)
             {
 				SharedVector2 posMineProche = data.Mines[0].Position;
 				Vector2 distanceMineProche = data.Mines[0].Position - spaceship.Position;
@@ -41,8 +41,6 @@ namespace Interceptor {
             {
 				behaviorTree.SetVariableValue("MinePos", Vector2.negativeInfinity);
 			}
-			
-
 
 			behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);

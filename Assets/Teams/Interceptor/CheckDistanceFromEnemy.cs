@@ -14,12 +14,14 @@ namespace Interceptor
         [BehaviorDesigner.Runtime.Tasks.Tooltip("Ship pos")]
         public SharedVector2 myShip;
 
-        [BehaviorDesigner.Runtime.Tasks.Tooltip("Need to shoot")]
-        public SharedBool shoot;
+        [BehaviorDesigner.Runtime.Tasks.Tooltip("Distance from enemy")]
+        public SharedFloat distance;
 
-        public override void OnStart()
+        public override TaskStatus OnUpdate()
         {
-            shoot.SetValue(true);
+            
+            distance.SetValue(Vector2.Distance(enemy.Value, myShip.Value));
+            return TaskStatus.Success;
         }
 
 

@@ -29,11 +29,11 @@ namespace Interceptor
             if (hit.collider.CompareTag("Asteroid"))
             {
                 //asteroidInBetween.SetValue(true);
-                return TaskStatus.Success;
+                return TaskStatus.Failure;
             }
             else
             {
-                return TaskStatus.Failure;
+                return TaskStatus.Success;
             }
 
             

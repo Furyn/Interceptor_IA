@@ -6,7 +6,7 @@ using DoNotModify;
 namespace Interceptor
 {
     [TaskCategory("Interceptor")]
-    public class CheckAsteroid : Action
+    public class CheckAsteroid : Conditional
     {
         [BehaviorDesigner.Runtime.Tasks.Tooltip("Target Pos")]
         public SharedVector2 target;
@@ -14,29 +14,24 @@ namespace Interceptor
         [BehaviorDesigner.Runtime.Tasks.Tooltip("Ship pos")]
         public SharedVector2 myShip;
 
-        [BehaviorDesigner.Runtime.Tasks.Tooltip("myship orientation")]
-        public SharedFloat myShipOrientation;
-
-        /*[BehaviorDesigner.Runtime.Tasks.Tooltip("Asteroid in between")]
-        public SharedBool asteroidInBetween;*/
+        [BehaviorDesigner.Runtime.Tasks.Tooltip("Distance From Enemy")]
+        public SharedFloat DistanceFromEnemy;
 
         public override TaskStatus OnUpdate()
         {
-            float shootAngle = Mathf.Deg2Rad * myShipOrientation.Value;
-
-            RaycastHit2D hit = Physics2D.Raycast(myShip.Value, new Vector2(Mathf.Cos(shootAngle), Mathf.Sin(shootAngle)));
-
-            if (hit.collider.CompareTag("Asteroid"))
+            Vector2 shootAngle = target.Value - myShip.Value;
+            int layerMask = 1 << 12;
+            RaycastHit2D hit = Physics2D.Raycast(myShip.Value, shootAngle, DistanceFromEnemy.Value, layerMask);
+            if (hit)
             {
-                //asteroidInBetween.SetValue(true);
-                return TaskStatus.Failure;
+                Debug.Log(hit.collider.tag);
+                if (hit.collider.CompareTag("Asteroid"))
+                {
+                    return TaskStatus.Failure;
+                }
             }
-            else
-            {
-                return TaskStatus.Success;
-            }
+            return TaskStatus.Success;
 
-            
         }
     }
 }

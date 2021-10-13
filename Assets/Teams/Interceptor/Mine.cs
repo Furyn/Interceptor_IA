@@ -6,18 +6,11 @@ namespace Interceptor
     [TaskCategory("Interceptor")]
     public class Mine : Action
     {
-        [BehaviorDesigner.Runtime.Tasks.Tooltip("isDropped")]
         public SharedBool isDropped;
 
-        public override TaskStatus OnUpdate()
+        public override void OnStart()
         {
-            isDropped = true;
-            return TaskStatus.Success;
-        }
-
-        public override void OnEnd()
-        {
-            isDropped = false;
+            isDropped.SetValue(true);
         }
     }
 }

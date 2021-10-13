@@ -27,7 +27,15 @@ namespace Interceptor {
 			Debug.Log(angleDir.Value);
 			float targetOrient = spaceship.Orientation + angleDir.Value;
 
-			return new InputData(thrust, targetOrient, needShoot, false, false);
+			bool shock = (bool)behaviorTree.GetVariable("UseChock").GetValue();
+			bool mine = (bool)behaviorTree.GetVariable("MineDropped").GetValue();
+			bool shoot = (bool)behaviorTree.GetVariable("Shoot").GetValue();
+
+			behaviorTree.SetVariableValue("Shoot", false);
+			behaviorTree.SetVariableValue("UseChock", false);
+			behaviorTree.SetVariableValue("MineDropped", false);
+
+			return new InputData(thrust, targetOrient, shoot, mine, shock);
 		}
 	}
 

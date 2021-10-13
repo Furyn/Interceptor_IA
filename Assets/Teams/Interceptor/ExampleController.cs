@@ -11,7 +11,8 @@ namespace Interceptor {
 	public class ExampleController : BaseSpaceShipController
 	{
         public BehaviorTree behaviorTree;
-        public override void Initialize(SpaceShipView spaceship, GameData data)
+
+		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
 		}
 
@@ -22,10 +23,12 @@ namespace Interceptor {
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
 
 			behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
+			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);
+			behaviorTree.SetVariableValue("ShipOrientaion", spaceship.Orientation);
 
-			SharedFloat angleDir = (SharedFloat)behaviorTree.GetVariable("Direction");
-			Debug.Log(angleDir.Value);
-			float targetOrient = spaceship.Orientation + angleDir.Value;
+			float angleDir = ((SharedFloat)behaviorTree.GetVariable("Direction")).Value;
+
+			float targetOrient = spaceship.Orientation + angleDir;
 
 			bool shock = (bool)behaviorTree.GetVariable("UseChock").GetValue();
 			bool mine = (bool)behaviorTree.GetVariable("MineDropped").GetValue();

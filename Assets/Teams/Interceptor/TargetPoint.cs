@@ -11,10 +11,14 @@ namespace Interceptor
 
 		[BehaviorDesigner.Runtime.Tasks.Tooltip("Target Pos")]
 		public SharedVector2 target;
-		[BehaviorDesigner.Runtime.Tasks.Tooltip("The GameObject that the task operates on. If null the task GameObject is used.")]
-		public SharedGameObject myShip;
 
-		[BehaviorDesigner.Runtime.Tasks.Tooltip("Target Pos")]
+		[BehaviorDesigner.Runtime.Tasks.Tooltip("Ship pos")]
+		public SharedVector2 myShip;
+
+		[BehaviorDesigner.Runtime.Tasks.Tooltip("Ship Orientation")]
+		public SharedFloat myShipOrientation;
+
+		[BehaviorDesigner.Runtime.Tasks.Tooltip("Angle dir")]
 		public SharedFloat angleDir;
 
 		public override void OnStart()
@@ -24,9 +28,12 @@ namespace Interceptor
 		public override TaskStatus OnUpdate()
 		{
 
-			Vector2 dir = myShip.Value.transform.position - new Vector3(target.Value.x, target.Value.y, target.Value.y);
-			dir = myShip.Value.transform.InverseTransformDirection(dir);
-			angleDir = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+			float shootAngle = Mathf.Deg2Rad * myShipOrientation.Value;
+			Vector2 shootDirection = new Vector2(Mathf.Cos(shootAngle), Mathf.Sin(shootAngle));
+			Vector2 spaceshipToTarget = target.Value - myShip.Value;
+
+			angleDir.SetValue(Vector2.SignedAngle(shootDirection, spaceshipToTarget));
+
 			Debug.Log(angleDir);
 			return TaskStatus.Success;
 		}

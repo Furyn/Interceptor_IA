@@ -20,6 +20,8 @@ namespace Interceptor {
             float distanceFromEnemy = Vector2.Distance(otherSpaceship.Position, spaceship.Position);
             behaviorTree.SetVariableValue("DistanceFromEnemy", distanceFromEnemy);
 
+            
+
             #region Calcul WayPoint
             SharedVector2 posWaypointProche = data.WayPoints[0].Position;
             Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
@@ -67,6 +69,15 @@ namespace Interceptor {
             {
 				behaviorTree.SetVariableValue("MinePos", Vector2.negativeInfinity);
 			}
+            #endregion
+
+            #region Check Invincibility
+
+            if (otherSpaceship.HitCountdown > 0f)
+                behaviorTree.SetVariableValue("IsInvincible", true);
+            else
+                behaviorTree.SetVariableValue("IsInvincible", false);
+
             #endregion
 
             int nbrWaypoint = (int)Mathf.Ceil((data.WayPoints.Count / 2)) + 1;

@@ -4,13 +4,13 @@ using BehaviorDesigner.Runtime.Tasks;
 namespace Interceptor
 {
     [TaskCategory("Interceptor")]
-    public class OnWaypoint : Action
+    public class Invincible : Action
     {
-        public SharedBool onWayPoint;
+        public SharedBool isInvincible;
 
         public override TaskStatus OnUpdate()
         {
-            if(onWayPoint.Value)
+            if (isInvincible.Value)
                 return TaskStatus.Success;
             return TaskStatus.Failure;
         }

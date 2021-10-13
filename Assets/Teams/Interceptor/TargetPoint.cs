@@ -1,6 +1,5 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using DoNotModify;
 using UnityEngine;
 
 namespace Interceptor
@@ -33,8 +32,6 @@ namespace Interceptor
 			Vector2 spaceshipToTarget = target.Value - myShip.Value;
 
 			angleDir.SetValue(Vector2.SignedAngle(shootDirection, spaceshipToTarget));
-
-			Debug.Log(angleDir);
 			return TaskStatus.Success;
 		}
 

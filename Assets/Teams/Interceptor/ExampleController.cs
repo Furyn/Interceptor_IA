@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BehaviorDesigner.Runtime;
-using UnityEngine;
+﻿using BehaviorDesigner.Runtime;
 using DoNotModify;
-
-//test dov
+using UnityEngine;
 
 namespace Interceptor {
 
@@ -20,7 +16,33 @@ namespace Interceptor {
 		{
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
 			float thrust = 1.0f;
-			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
+
+            if (data.Mines.Count > 0)
+            {
+				SharedVector2 posMineProche = data.Mines[0].Position;
+				Vector2 distanceMineProche = data.Mines[0].Position - spaceship.Position;
+
+				foreach (MineView new_mine in data.Mines)
+				{
+                    if (!new_mine.IsActive)
+                    {
+						continue;
+                    }
+					Vector2 distanceMine = new_mine.Position - spaceship.Position;
+					if ( Mathf.Abs(distanceMine.x) + Mathf.Abs(distanceMine.y) < Mathf.Abs(distanceMineProche.x) + Mathf.Abs(distanceMineProche.y))
+					{
+						distanceMineProche = distanceMine;
+						posMineProche = new_mine.Position;
+					}
+				}
+				behaviorTree.SetVariableValue("MinePos", posMineProche);
+			}
+            else
+            {
+				behaviorTree.SetVariableValue("MinePos", Vector2.negativeInfinity);
+			}
+			
+
 
 			behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);

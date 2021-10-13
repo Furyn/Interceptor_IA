@@ -17,12 +17,15 @@ namespace Interceptor {
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
 			float thrust = (float)behaviorTree.GetVariable("ShipThruster").GetValue();
 
-			SharedVector2 posWaypointProche = data.WayPoints[0].Position;
-			Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
-			Vector2 distanceLimit = new Vector2(1.5f, 1.5f);
+<<<<<<< HEAD
             float distanceFromEnemy = Vector2.Distance(otherSpaceship.Position, spaceship.Position);
             behaviorTree.SetVariableValue("DistanceFromEnemy", distanceFromEnemy);
 
+            if (data.Mines.Count > 0)
+=======
+			SharedVector2 posWaypointProche = data.WayPoints[0].Position;
+			Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
+			Vector2 distanceLimit = new Vector2(1.5f, 1.5f);
 
 			foreach (WayPointView wayPoint in data.WayPoints)
 			{
@@ -39,7 +42,8 @@ namespace Interceptor {
 			}
 			behaviorTree.SetVariableValue("WaypointPos", posWaypointProche);
 
-            if (data.Mines.Count > 0)
+			if (data.Mines.Count > 0)
+>>>>>>> cf7f2c6e1604707941cea826de53c829975138ba
             {
 				SharedVector2 posMineProche = data.Mines[0].Position;
 				Vector2 distanceMineProche = data.Mines[0].Position - spaceship.Position;

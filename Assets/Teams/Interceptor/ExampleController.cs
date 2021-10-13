@@ -20,7 +20,21 @@ namespace Interceptor {
             float distanceFromEnemy = Vector2.Distance(otherSpaceship.Position, spaceship.Position);
             behaviorTree.SetVariableValue("DistanceFromEnemy", distanceFromEnemy);
 
-            
+            #region Check Bullet
+
+            /*if (data.Bullets.Count > 0)
+            {
+                foreach (BulletView bullet in data.Bullets)
+                {
+                    Debug.Log(data.Bullets.Count);
+                    if (Vector2.Dot(spaceship.Velocity.normalized, bullet.Velocity.normalized) >= 1f)
+                        behaviorTree.SetVariableValue("BulletCanHitMe", true);
+                    else
+                        behaviorTree.SetVariableValue("BulletCanHitMe", false);
+                }
+            }*/
+
+            #endregion
 
             #region Calcul WayPoint
             SharedVector2 posWaypointProche = data.WayPoints[0].Position;

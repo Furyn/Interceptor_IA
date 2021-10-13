@@ -4,20 +4,20 @@ using BehaviorDesigner.Runtime.Tasks;
 namespace Interceptor
 {
     [TaskCategory("Interceptor")]
-    public class Mine : Action
+    public class ShockWave : Action
     {
         [BehaviorDesigner.Runtime.Tasks.Tooltip("isDropped")]
-        public SharedBool isDropped;
+        public SharedBool useShock;
 
         public override TaskStatus OnUpdate()
         {
-            isDropped = true;
+            useShock = true;
             return TaskStatus.Success;
         }
 
         public override void OnEnd()
         {
-            isDropped = false;
+            useShock = false;
         }
     }
 }

@@ -18,19 +18,6 @@ namespace Interceptor
         public SharedFloat distanceFromEnemy;
 
         public float shootingMaxDistance;
-        private GameObject prevGameObject;
-        private SpaceShip spaceShip;
-
-        public override void OnStart()
-        {
-            GameObject currentGameObject = GetDefaultGameObject(targetGameObject.Value);
-            if (currentGameObject != prevGameObject)
-            {
-                spaceShip = currentGameObject.GetComponent<SpaceShip>();
-                prevGameObject = currentGameObject;
-            }
-            
-        }
 
         public override TaskStatus OnUpdate()
         {

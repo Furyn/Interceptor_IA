@@ -22,17 +22,39 @@ namespace Interceptor {
 
             #region Check Bullet
 
-            /*if (data.Bullets.Count > 0)
+            if (data.Bullets.Count > 0)
             {
+                int layerMask = 1 << 10;
+                bool bulletCanHitMe = false;
                 foreach (BulletView bullet in data.Bullets)
                 {
+                    if (Vector2.Distance(spaceship.Position, bullet.Position) > 1)
+                    {
+                        RaycastHit2D hit = Physics2D.Raycast(bullet.Position, bullet.Velocity, Mathf.Infinity, layerMask);
+                        
+                        if(hit)
+                        {
+                            bulletCanHitMe = true;
+                        }
+                        else
+                        {
+                            behaviorTree.SetVariableValue("BulletCanHitMe", false);
+                        }
+                    }
                     Debug.Log(data.Bullets.Count);
-                    if (Vector2.Dot(spaceship.Velocity.normalized, bullet.Velocity.normalized) >= 1f)
+                    
+                    /*if (Vector2.Dot(spaceship.Velocity.normalized, bullet.Velocity.normalized) >= 1f)
                         behaviorTree.SetVariableValue("BulletCanHitMe", true);
                     else
-                        behaviorTree.SetVariableValue("BulletCanHitMe", false);
+                        behaviorTree.SetVariableValue("BulletCanHitMe", false);*/
                 }
-            }*/
+
+                behaviorTree.SetVariableValue("BulletCanHitMe", bulletCanHitMe);
+            }
+            else
+            {
+                behaviorTree.SetVariableValue("BulletCanHitMe", false);
+            }
 
             #endregion
 

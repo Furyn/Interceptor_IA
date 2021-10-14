@@ -56,7 +56,8 @@ namespace Interceptor {
             #region Calcul WayPoint
             SharedVector2 posWaypointProche = Vector2.positiveInfinity;
             Vector2 distanceWaypointProche = Vector2.positiveInfinity;
-            float distanceLimit = 0.2f;
+            Vector2 distanceWaypointProcheMine = Vector2.positiveInfinity;
+            float distanceLimit = 0.3f;
             int ourWaypoint = 0;
 
             foreach (WayPointView wayPoint in data.WayPoints)
@@ -69,6 +70,7 @@ namespace Interceptor {
                         distanceWaypointProche = distanceWayPoint;
                         posWaypointProche = wayPoint.Position;
                     }
+                    distanceWaypointProcheMine = distanceWayPoint;
                 }
 
                 if(wayPoint.Owner == spaceship.Owner)
@@ -76,8 +78,11 @@ namespace Interceptor {
                     ourWaypoint++;
                 }
             }
-            if (Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y) < distanceLimit)
+            if (Mathf.Abs(distanceWaypointProcheMine.x) + Mathf.Abs(distanceWaypointProcheMine.y) < distanceLimit)
+            {
                 behaviorTree.SetVariableValue("OnWayPoint", true);
+                Debug.Log("il passe a true");
+            }
             else
                 behaviorTree.SetVariableValue("OnWayPoint", false);
 

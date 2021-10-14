@@ -40,6 +40,7 @@ namespace Interceptor {
             SharedVector2 posWaypointProche = data.WayPoints[0].Position;
             Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
             float distanceLimit = 0.2f;
+            int ourWaypoint = 0;
 
             foreach (WayPointView wayPoint in data.WayPoints)
             {
@@ -51,6 +52,11 @@ namespace Interceptor {
                         distanceWaypointProche = distanceWayPoint;
                         posWaypointProche = wayPoint.Position;
                     }
+                }
+
+                if(wayPoint.Owner == spaceship.Owner)
+                {
+                    ourWaypoint++;
                 }
             }
             if (Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y) < distanceLimit)
@@ -97,10 +103,12 @@ namespace Interceptor {
 
             #endregion
 
+            
             int nbrWaypoint = (int)Mathf.Ceil((data.WayPoints.Count / 2)) + 1;
+            
 
-            behaviorTree.SetVariableValue("OurScore", spaceship.Score);
-            behaviorTree.SetVariableValue("NumberOfWayPoint", nbrWaypoint);
+            behaviorTree.SetVariableValue("OurWaypoint", ourWaypoint);
+            behaviorTree.SetVariableValue("HalfNumberOfWayPoint", nbrWaypoint);
             behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);
 			behaviorTree.SetVariableValue("ShipOrientaion", spaceship.Orientation);

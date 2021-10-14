@@ -19,7 +19,7 @@ namespace DoNotModify
 		public AsteroidView view;
 
 		public Vector2 Position { get { return (Vector2)(transform.position); } }
-		public float Radius { get { return _collider.radius * _collider.transform.lossyScale.x; } }
+		public float Radius { get { return _collider.radius * Mathf.Abs(_collider.transform.lossyScale.x); } }
 
 		private CircleCollider2D _collider = null;
 

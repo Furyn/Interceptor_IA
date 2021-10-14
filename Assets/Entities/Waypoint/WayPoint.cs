@@ -21,7 +21,7 @@ namespace DoNotModify
 
 		public WayPointView view;
 		public int Owner { get { return _owner; } }
-		public float Radius { get { return _collider.radius * _collider.transform.lossyScale.x; } }
+		public float Radius { get { return _collider.radius * Mathf.Abs(_collider.transform.lossyScale.x); } }
 		public Vector2 Position { get { return (Vector2)(transform.position); } }
 
 		private int _owner = -1;

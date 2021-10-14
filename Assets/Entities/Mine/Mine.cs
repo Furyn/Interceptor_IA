@@ -18,8 +18,8 @@ namespace DoNotModify
 	public class Mine : MonoBehaviour
 	{
 		public MineView view;
-		public float ExplosionRadius { get { return _explosionCollider.radius * _explosionCollider.transform.lossyScale.x; } }
-		public float BulletHitRadius { get { return _bulletCollider.radius * _bulletCollider.transform.lossyScale.x; } }
+		public float ExplosionRadius { get { return _explosionCollider.radius * Mathf.Abs(_explosionCollider.transform.lossyScale.x); } }
+		public float BulletHitRadius { get { return _bulletCollider.radius * Mathf.Abs(_bulletCollider.transform.lossyScale.x); } }
 		public Vector2 Position { get { return (Vector2)(transform.position); } }
 		public bool IsActive { get { return _isActive; } }
 

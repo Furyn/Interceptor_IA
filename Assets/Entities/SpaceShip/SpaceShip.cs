@@ -36,7 +36,7 @@ namespace DoNotModify
 		public float SpeedMax { get { return _speedMax; } }
 		public Vector2 Position { get { return (Vector2)(transform.position); } }
 		public float Orientation { get { return transform.eulerAngles.z; } }
-		public float Radius { get { return _collider.radius * _collider.transform.lossyScale.x; } }
+		public float Radius { get { return _collider.radius * Mathf.Abs(_collider.transform.lossyScale.x); } }
 		public float HitCountdown { get { return _hitCountdown; } }
 		public float Energy { get { return _energy; } }
 		public float MineEnergyCost { get { return _mineEnergyCost; } }

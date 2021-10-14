@@ -21,15 +21,15 @@ namespace Interceptor
         {
             Vector2 shootAngle = target.Value - myShip.Value;
             int layerMask = 1 << 10;
-            RaycastHit2D hit = Physics2D.Raycast(myShip.Value, shootAngle, DistanceFromEnemy.Value, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(myShip.Value + shootAngle, shootAngle, DistanceFromEnemy.Value, layerMask);
             if (hit)
             {
                 if (hit.collider.CompareTag("Player"))
                 {
-                    return TaskStatus.Failure;
+                    return TaskStatus.Success;
                 }
             }
-            return TaskStatus.Success;
+            return TaskStatus.Failure;
 
         }
     }

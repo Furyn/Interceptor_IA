@@ -22,11 +22,12 @@ namespace Interceptor
 
         public override TaskStatus OnUpdate()
         {
-            Vector2 shootAngle = target.Value - myShip.Value;
-            float deltaAngle = Vector2.SignedAngle(target.Value, myShip.Value);
+            Vector2 shootAngle = myShip.Value - target.Value;
+            float orientationRadiant = Mathf.Deg2Rad * orientation.Value;
+            Vector2 orientationShip = new Vector2(Mathf.Cos(orientationRadiant), Mathf.Sin(orientationRadiant));
             int layerMask = 1 << 10;
-            RaycastHit2D hit = Physics2D.Raycast(myShip.Value + shootAngle, shootAngle, orientation.Value, layerMask);
-            //RaycastHit2D hit = Physics2D.BoxCast(myShip.Value + shootAngle, new Vector2(1, 1), deltaAngle, shootAngle, DistanceFromEnemy.Value, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(myShip.Value + orientationShip.normalized, orientationShip, DistanceFromEnemy.Value, layerMask);
+            Debug.DrawRay(myShip.Value + orientationShip.normalized, orientationShip);
             if (hit)
             {
                 if (hit.collider.CompareTag("Player"))

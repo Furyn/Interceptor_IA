@@ -24,7 +24,6 @@ namespace Interceptor
             RaycastHit2D hit = Physics2D.Raycast(myShip.Value, shootAngle, DistanceFromEnemy.Value, layerMask);
             if (hit)
             {
-                Debug.Log(hit.collider.tag);
                 if (hit.collider.CompareTag("Asteroid"))
                 {
                     return TaskStatus.Failure;

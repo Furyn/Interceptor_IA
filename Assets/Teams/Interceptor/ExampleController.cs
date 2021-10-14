@@ -41,12 +41,7 @@ namespace Interceptor {
                             behaviorTree.SetVariableValue("BulletCanHitMe", false);
                         }
                     }
-                    Debug.Log(data.Bullets.Count);
                     
-                    /*if (Vector2.Dot(spaceship.Velocity.normalized, bullet.Velocity.normalized) >= 1f)
-                        behaviorTree.SetVariableValue("BulletCanHitMe", true);
-                    else
-                        behaviorTree.SetVariableValue("BulletCanHitMe", false);*/
                 }
 
                 behaviorTree.SetVariableValue("BulletCanHitMe", bulletCanHitMe);
@@ -59,8 +54,8 @@ namespace Interceptor {
             #endregion
 
             #region Calcul WayPoint
-            SharedVector2 posWaypointProche = data.WayPoints[0].Position;
-            Vector2 distanceWaypointProche = data.WayPoints[0].Position - spaceship.Position;
+            SharedVector2 posWaypointProche = Vector2.positiveInfinity;
+            Vector2 distanceWaypointProche = Vector2.positiveInfinity;
             float distanceLimit = 0.2f;
             int ourWaypoint = 0;
 
@@ -134,10 +129,11 @@ namespace Interceptor {
             behaviorTree.SetVariableValue("EnnemyShipPos", otherSpaceship.Position);
 			behaviorTree.SetVariableValue("ShipPos", spaceship.Position);
 			behaviorTree.SetVariableValue("ShipOrientaion", spaceship.Orientation);
+            behaviorTree.SetVariableValue("ShipVelocity", spaceship.Velocity);
 
-			float angleDir = ((SharedFloat)behaviorTree.GetVariable("Direction")).Value;
+            float angleDir = ((SharedFloat)behaviorTree.GetVariable("Direction")).Value;
 
-			float targetOrient = spaceship.Orientation + angleDir;
+			float targetOrient = angleDir;
 
 			bool shock = (bool)behaviorTree.GetVariable("UseChock").GetValue();
 			bool mine = (bool)behaviorTree.GetVariable("MineDropped").GetValue();

@@ -46,8 +46,11 @@ namespace Interceptor {
                 Vector2 distanceWayPoint = wayPoint.Position - spaceship.Position;
                 if (Mathf.Abs(distanceWayPoint.x) + Mathf.Abs(distanceWayPoint.y) < Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y))
                 {
-                    distanceWaypointProche = distanceWayPoint;
-                    posWaypointProche = wayPoint.Position;
+                    if (wayPoint.Owner != spaceship.Owner)
+                    {
+                        distanceWaypointProche = distanceWayPoint;
+                        posWaypointProche = wayPoint.Position;
+                    }
                 }
             }
             if (Mathf.Abs(distanceWaypointProche.x) + Mathf.Abs(distanceWaypointProche.y) < distanceLimit)

@@ -15,7 +15,7 @@ namespace Interceptor
 		public SharedVector2 myShip;
 
 		[BehaviorDesigner.Runtime.Tasks.Tooltip("Ship Orientation")]
-		public SharedFloat myShipOrientation;
+		public SharedVector2 myShipVelocity;
 
 		[BehaviorDesigner.Runtime.Tasks.Tooltip("Angle dir")]
 		public SharedFloat angleDir;
@@ -27,11 +27,14 @@ namespace Interceptor
 		public override TaskStatus OnUpdate()
 		{
 
-			float shootAngle = Mathf.Deg2Rad * myShipOrientation.Value;
-			Vector2 shootDirection = new Vector2(Mathf.Cos(shootAngle), Mathf.Sin(shootAngle));
-			Vector2 spaceshipToTarget = target.Value - myShip.Value;
+			float deltaAngle =  Vector2.SignedAngle(myShipVelocity.Value, target.Value - myShip.Value);
+			deltaAngle *= 1.8f;
+			deltaAngle = Mathf.Clamp(deltaAngle, -170, 170);
+			float velocityOrientation = Vector2.SignedAngle(Vector2.right, myShipVelocity.Value);
+			float finalOrientation = velocityOrientation + deltaAngle;
 
-			angleDir.SetValue(Vector2.SignedAngle(shootDirection, spaceshipToTarget));
+			angleDir.SetValue(finalOrientation);
+
 			return TaskStatus.Success;
 		}
 

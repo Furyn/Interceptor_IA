@@ -81,7 +81,6 @@ namespace Interceptor {
             if (Mathf.Abs(distanceWaypointProcheMine.x) + Mathf.Abs(distanceWaypointProcheMine.y) < distanceLimit)
             {
                 behaviorTree.SetVariableValue("OnWayPoint", true);
-                Debug.Log("il passe a true");
             }
             else
                 behaviorTree.SetVariableValue("OnWayPoint", false);
